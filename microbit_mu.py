@@ -1,14 +1,11 @@
-# Write your code here :-)
-from microbit import *
-import utime
+from microbit import uart, display, sleep
+
+uart.init(9600)  # Match your Python baudrate
 
 while True:
-    # Example: send accelerometer data over serial
-    x = accelerometer.get_x()
-    y = accelerometer.get_y()
-    z = accelerometer.get_z()
-
-    # Send comma-separated values
-    print("{},{},{}".format(x, y, z))
-
-    utime.sleep_ms(500)  # Send every 0.5 seconds
+    if uart.any():
+        msg_encoded = uart.readline()
+        if msg_encoded:
+            text = msg_encoded.decode("utf-8").rstrip()
+            display.scroll(text)  # Scrolls received text
+    sleep(100)
