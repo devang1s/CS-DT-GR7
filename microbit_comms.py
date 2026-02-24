@@ -21,7 +21,7 @@ def write_to_port(port, message):
     """
 
     ser = serial.Serial(port, 9600, timeout=1)
-    ser.write(message.encode('utf-8'))
+    ser.write(message.encode('utf-8') + b'\r\n')
 
 def read_from_port(port):
     """
@@ -33,7 +33,10 @@ def read_from_port(port):
     Returns:
         str: Returns data from serial port
     """
-    ser = serial.Serial(port, 9600, timeout=1)
+    try:
+        ser = serial.Serial(port, 9600, timeout=1)
+    except serial.serialutil.SerialException:
+        return 'The port specified has no device connected to it. Make sure that the device is connected properly.'
     line = ser.readline()
     """try:
         return line.decode('utf-8').rstrip()
@@ -47,7 +50,7 @@ while True:
     except serial.  serialutil.SerialException:
         print('none')
         time.sleep(0.1) """
-    time.sleep(1)
+    time.sleep(0.2  )
     print(read_from_port('COM5'))
     write_to_port('COM5', 'hi') 
 

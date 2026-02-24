@@ -1,19 +1,11 @@
-from microbit import uart, display, sleep
+from microbit import pin0, sleep
 
-uart.init(9600)
-
-def read_serial():
-    if uart.any():
-        msg_encoded = uart.readline()
-        if msg_encoded:
-            text = msg_encoded.decode("utf-8").rstrip()
-            return text
-
-def write_serial(message):
-    uart.write(message.encode('utf-8'))
+pin0.set_analog_period(20)  # 20ms PWM period for servos
 
 while True:
-    write_serial('hi')
-    """text = read_serial()
-    if text is not None:
-        display.scroll(text)"""
+    pin0.write_analog(100)  # ~0° (1ms pulse)
+    sleep(1000)
+    pin0.write_analog(150)  # 90° (1.5ms)
+    sleep(1000)
+    pin0.write_analog(200)  # 180° (2ms)
+    sleep(1000)
