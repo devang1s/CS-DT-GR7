@@ -45,13 +45,5 @@ def read_from_port(port):
     return line.decode('utf-8').rstrip()
 
 while True:
-    """     try:
-        print(read_from_port('COM5'))
-    except serial.  serialutil.SerialException:
-        print('none')
-        time.sleep(0.1) """
-    time.sleep(0.2  )
-    print(read_from_port('COM5'))
-    write_to_port('COM5', 'hi') 
-
-""" list_ports() """
+    message_to_microbit = input("Message:")
+    write_to_port("COM4", message_to_microbit)
